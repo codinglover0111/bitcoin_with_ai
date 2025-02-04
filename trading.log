@@ -1,0 +1,73 @@
+2025-02-04 14:09:07,483 - INFO - Scheduler started at 2025-02-04 14:09:07.483646+09:00
+2025-02-04 14:09:44,916 - INFO - Scheduler started at 2025-02-04 14:09:44.916073+09:00
+2025-02-04 14:10:11,586 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=0.0 type='market' tp=2.4 sl=2.9
+2025-02-04 14:12:00,278 - INFO - Scheduler started at 2025-02-04 14:12:00.277937+09:00
+2025-02-04 14:12:50,696 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=2.58 type='limit' tp=2.4 sl=2.65
+2025-02-04 14:12:58,699 - INFO - Scheduler started at 2025-02-04 14:12:58.699121+09:00
+2025-02-04 14:13:25,397 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=0.0 type='market' tp=2.4 sl=2.7
+2025-02-04 14:13:55,423 - INFO - Scheduler started at 2025-02-04 14:13:55.423445+09:00
+2025-02-04 14:13:57,501 - INFO - Active position exists, skipping trading cycle
+2025-02-04 14:15:12,897 - INFO - Scheduler started at 2025-02-04 14:15:12.897849+09:00
+2025-02-04 14:15:14,913 - INFO - Active position exists, skipping trading cycle
+2025-02-04 14:15:45,111 - INFO - Scheduler started at 2025-02-04 14:15:45.111814+09:00
+2025-02-04 14:16:11,049 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=0.0 type='market' tp=2.4 sl=2.86
+2025-02-04 14:18:03,833 - INFO - Scheduler started at 2025-02-04 14:18:03.833776+09:00
+2025-02-04 14:18:26,658 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=0.0 type='market' tp=2.35 sl=2.65
+2025-02-04 14:19:46,197 - INFO - Scheduler started at 2025-02-04 14:19:46.197106+09:00
+2025-02-04 14:20:10,486 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=2.7 type='limit' tp=2.2 sl=3.05
+2025-02-04 14:20:37,130 - INFO - Scheduler started at 2025-02-04 14:20:37.130690+09:00
+2025-02-04 14:21:01,994 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=0.0 type='market' tp=2.3 sl=2.7
+2025-02-04 14:21:49,033 - INFO - Scheduler started at 2025-02-04 14:21:49.033814+09:00
+2025-02-04 14:22:15,115 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=2.5734 type='market' tp=2.4 sl=2.65
+2025-02-04 14:27:26,788 - INFO - Scheduler started at 2025-02-04 14:27:26.788414+09:00
+2025-02-04 14:27:59,430 - INFO - Scheduler started at 2025-02-04 14:27:59.430326+09:00
+2025-02-04 14:28:40,881 - INFO - Scheduler started at 2025-02-04 14:28:40.881106+09:00
+2025-02-04 14:29:09,659 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=2.65 type='limit' tp=2.3 sl=2.8
+2025-02-04 14:37:28,135 - INFO - Scheduler started at 2025-02-04 14:37:28.134990+09:00
+2025-02-04 14:37:29,995 - INFO - Active position exists, cancle current orders
+2025-02-04 14:38:13,890 - INFO - Scheduler started at 2025-02-04 14:38:13.890675+09:00
+2025-02-04 14:38:15,771 - INFO - Active position exists, cancle current orders
+2025-02-04 14:38:43,944 - INFO - Position opened: symbol='XRP/USDT:USDT' side='buy' quantity=1.0 price=0.0 type='market' tp=2.75 sl=2.4
+2025-02-04 14:39:24,249 - INFO - Scheduler started at 2025-02-04 14:39:24.249653+09:00
+2025-02-04 14:40:21,651 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=0.0 type='market' tp=2.2 sl=2.7
+2025-02-04 14:41:58,458 - INFO - Scheduler started at 2025-02-04 14:41:58.456970+09:00
+2025-02-04 14:43:48,963 - INFO - Scheduler started at 2025-02-04 14:43:48.963633+09:00
+2025-02-04 14:44:33,787 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=2.54 type='limit' tp=2.4 sl=2.6
+2025-02-04 14:44:50,184 - INFO - Scheduler started at 2025-02-04 14:44:50.184874+09:00
+2025-02-04 14:44:52,158 - INFO - Active position exists, cancle current orders
+2025-02-04 14:45:17,430 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=2.6 type='limit' tp=2.3 sl=2.75
+2025-02-04 14:45:47,711 - INFO - Scheduler started at 2025-02-04 14:45:47.711527+09:00
+2025-02-04 14:45:49,502 - INFO - Active position exists, cancle current orders
+2025-02-04 14:46:16,067 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=0.0 type='limit' tp=2.25 sl=2.85
+2025-02-04 14:46:32,501 - INFO - Scheduler started at 2025-02-04 14:46:32.501810+09:00
+2025-02-04 14:46:58,830 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=0.1 type='limit' tp=2.3 sl=2.6
+2025-02-04 14:48:27,679 - INFO - Scheduler started at 2025-02-04 14:48:27.678995+09:00
+2025-02-04 14:49:10,280 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=0.1 type='limit' tp=2.3 sl=2.68
+2025-02-04 14:52:38,968 - INFO - Scheduler started at 2025-02-04 14:52:38.968325+09:00
+2025-02-04 14:53:09,347 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=0.1 type='limit' tp=2.46 sl=2.66
+2025-02-04 14:53:42,021 - INFO - Scheduler started at 2025-02-04 14:53:42.021349+09:00
+2025-02-04 14:54:16,310 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=2.5601 type='limit' tp=2.4 sl=2.76
+2025-02-04 14:56:32,960 - INFO - Scheduler started at 2025-02-04 14:56:32.959834+09:00
+2025-02-04 14:56:36,439 - INFO - Active position exists, cancle current orders
+2025-02-04 14:57:40,794 - INFO - Scheduler started at 2025-02-04 14:57:40.794096+09:00
+2025-02-04 14:58:07,972 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=2.5322 type='market' tp=2.4 sl=2.65
+2025-02-04 14:58:31,461 - INFO - Scheduler started at 2025-02-04 14:58:31.461843+09:00
+2025-02-04 14:58:33,692 - INFO - Active position exists, cancle current orders
+2025-02-04 14:58:49,031 - INFO - Scheduler started at 2025-02-04 14:58:49.031866+09:00
+2025-02-04 14:59:20,465 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=2.5246 type='market' tp=2.4 sl=2.6
+2025-02-04 14:59:31,201 - INFO - Scheduler started at 2025-02-04 14:59:31.201230+09:00
+2025-02-04 14:59:34,267 - INFO - Active position exists, cancle current orders
+2025-02-04 14:59:57,535 - INFO - Scheduler started at 2025-02-04 14:59:57.535026+09:00
+2025-02-04 15:00:23,596 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=2.5268 type='market' tp=2.35 sl=2.65
+2025-02-04 15:01:06,573 - INFO - Scheduler started at 2025-02-04 15:01:06.573632+09:00
+2025-02-04 15:01:08,590 - INFO - Active position exists, cancle current orders
+2025-02-04 15:01:39,848 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=2.5258 type='market' tp=2.4 sl=2.6
+2025-02-04 15:01:57,410 - INFO - Scheduler started at 2025-02-04 15:01:57.410585+09:00
+2025-02-04 15:01:59,537 - INFO - Active position exists, skipping trading cycle
+2025-02-04 15:02:24,634 - INFO - Scheduler started at 2025-02-04 15:02:24.634621+09:00
+2025-02-04 15:02:26,487 - INFO - Active position exists, skipping trading cycle
+2025-02-04 15:02:39,886 - INFO - Scheduler started at 2025-02-04 15:02:39.886633+09:00
+2025-02-04 15:03:19,363 - INFO - Scheduler started at 2025-02-04 15:03:19.363395+09:00
+2025-02-04 15:03:26,767 - INFO - Active position exists, cancle current orders
+2025-02-04 15:03:33,409 - INFO - Scheduler started at 2025-02-04 15:03:33.409286+09:00
+2025-02-04 15:04:02,449 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=2.5465 type='market' tp=2.4 sl=2.75
