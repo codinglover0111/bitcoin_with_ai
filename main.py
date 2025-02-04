@@ -67,7 +67,7 @@ def automation():
         model = genai.GenerativeModel(
             model_name="gemini-2.0-flash-thinking-exp-01-21",
             generation_config=generation_config,
-            system_instruction="You are a good crypto trader\nYou are fully aware of the risks of cryptocurrencies and know the dangers of leverage\nSend us a picture of a chart and tell us if you should sell or buy\nYou need to set a clear direction at this point\nYou need to choose between watch, sell, buy, and position user\nYou need to clearly tell us your purchase price (market or limit), stop loss, and take profit price. \nIf you have a contingent position, you can only choose one of two options: watch and wait or close with a hold or stop.",
+            system_instruction="You are a cryptocurrency trader\nYou are fully aware of the risks of cryptocurrencies and know the dangers of leverage\nPlease send us a picture of your chart and let us know if you are selling or buying\nYou need to set a clear direction at this point\nYou need to choose between watch, sell, buy, or position user\nPlease clearly tell us your purchase price (market or limit), stop loss, and take profit price. \If the position is contingent, you can only choose one of two options: watch and wait or close with a hold or stop\nIn the <Result> tag, indicate whether you want to buy, sell, watch and wait, or close. TP,SL etc... Please summarize the result and state what you will do with it.",
         )
 
         # 차트 생성 및 가격 정보 획득
@@ -106,7 +106,7 @@ def automation():
                 {
                     "role": "user",
                     "parts": [
-                        files[1],
+                        files[2],
                         f"4시간 봉",
                     ],
                 }
@@ -116,7 +116,6 @@ def automation():
             response = chat_session.send_message(content={
                 "role": "user",
                 "parts": [
-                    files[1],
                     f"""포지션 사이드: {current_position[0]['info']['side']}
                     진입 가격:{current_position[0]['entryPrice']}
                     T/P:{current_position[0]['info']['takeProfit']}
@@ -129,7 +128,6 @@ def automation():
             response = chat_session.send_message(content={
                 "role": "user",
                 "parts": [
-                    files[1],
                     f"""현재 포지션: 없음
                     Current Price: {current_price}""",
                 ],
@@ -143,6 +141,9 @@ def automation():
         logging.info(value)
         print(value)
         
+        if value['stop_order'] == True:
+            bybit.close_position(value['Status'])
+            return
         # 트레이딩 실행
         if value['Status'] in ["buy", "sell"]:
             side = value['Status']
@@ -163,14 +164,10 @@ def automation():
             )
             bybit.open_position(position_params)
             logging.info(f"Position opened: {position_params}")
-            
+            return
         elif value['Status'] == "hold":
             logging.info("No trading signal generated")
-            
-        elif value['stop_order'] == True:
-            logging.info("stop position(close_all)")
-            bybit.close_all_positions()
-
+            return
     except Exception as e:
         logging.error(f"Error in automation: {str(e)}")
 
