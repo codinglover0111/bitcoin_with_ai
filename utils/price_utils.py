@@ -38,7 +38,6 @@ class bybit_utils:
     
     def plot_candlestick(self):
         self.get_ohlcv()
-        self.get_ohlcv()
         self.get_current_price()
         self.get_bollinger_band()
         self.get_rsi()

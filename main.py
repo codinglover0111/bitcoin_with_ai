@@ -121,7 +121,8 @@ def automation():
                     진입 가격:{current_position[0]['entryPrice']}
                     T/P:{current_position[0]['info']['takeProfit']}
                     S/L:{current_position[0]['info']['stopLoss']}
-                    Current Price: {current_price}""",
+                    Current Price: {current_price}
+                    현재 hold,stop만 가능한 상황입니다.""",
                 ],
             })
         else:
@@ -134,10 +135,12 @@ def automation():
                 ],
             })
         response = response.text
+        logging.info(response)
         print(response)
 
         object = make_to_object()
         value = object.make_it_object(response)
+        logging.info(value)
         print(value)
         
         # 트레이딩 실행

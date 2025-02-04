@@ -18,5 +18,6 @@ COPY . .
 ENV TZ=Asia/Seoul
 ENV PYTHONUNBUFFERED=1
 
+# 볼륨 설정
 # 실행 명령
 CMD ["python", "main.py"]
