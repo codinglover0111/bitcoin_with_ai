@@ -60,7 +60,7 @@ class BybitUtils:
             print(f"Error fetching positions: {e}")
             return None
         
-    def get_position(self, num=1):
+    def get_position(self, num=0):
         """하나의 포지션 정보만 조회"""
         try:
             self.positions: dict  = self.exchange.fetch_positions()
@@ -123,35 +123,28 @@ class BybitUtils:
     
     # TODO: OrderID 저장?
     
-    def close_position(self, status):
+    def close_position(self):
         try:
+            # ! 추후 기능 추가를 고려안한 하드코딩임 수정 필요
+            position = self.get_position()
             # 오직 포지션 종료만 가능함
             params = {'reduce_only': True}
             # 포지션 청산
-            if status == 'sell':
-                # 롱 포지션 청산: 시장가 매도
-                self.exchange.create_market_buy_order(
-                    symbol="XRP/USDT:USDT",
-                    amount=1000,
-                    params=params
-                )
-            elif status == 'buy':
-                # 숏 포지션 청산: 시장가 매도
+            if position['side'] == 'Buy':
                 self.exchange.create_market_sell_order(
                     symbol="XRP/USDT:USDT",
                     amount=1000,
                     params=params
                 )
-        
+            else:
+                self.exchange.create_market_buy_order(
+                    symbol="XRP/USDT:USDT",
+                    amount=1000,
+                    params=params
+                )
         except Exception as e:
             print(f"Error closing position: {e}")
             return None
-        
-    def close_all_positions(self):
-        try:
-            # 포지션 청산
-            order = self.exchange.close_all_positions()
-            return order
         
         except Exception as e:
             print(f"Error closing position: {e}")
@@ -186,7 +179,7 @@ class BybitUtils:
         
 if __name__ == '__main__':
     bybit = BybitUtils(is_testnet=True)  # 테스트넷 사용
-    value = bybit.close_position('buy')
+    value = bybit.close_position()
     
     print(value)
     

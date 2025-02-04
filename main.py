@@ -117,7 +117,7 @@ def automation():
                 response = chat_session.send_message(content={
                     "role": "user",
                     "parts": [
-                        f"""포지션 사이드: {current_position[0]['info']['side']}
+                        f"""현재 포지션 사이드: {current_position[0]['info']['side']}
                         진입 가격:{current_position[0]['entryPrice']}
                         T/P:{current_position[0]['info']['takeProfit']}
                         S/L:{current_position[0]['info']['stopLoss']}
@@ -149,7 +149,7 @@ def automation():
     print(value)
     
     if value['stop_order'] == True:
-        bybit.close_position(value['Status'])
+        bybit.close_position()
         return
     # 트레이딩 실행
     if value['Status'] in ["buy", "sell"]:
