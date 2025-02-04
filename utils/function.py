@@ -11,7 +11,7 @@ class make_to_object():
         "max_output_tokens": 400,
         "response_schema": content.Schema(
             type = content.Type.OBJECT,
-            required = ["Status"],
+            required = ["Status","tp","sl","price","buy_now","stop_order"],
             properties = {
             "Status": content.Schema(
                 type = content.Type.STRING,
