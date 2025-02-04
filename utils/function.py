@@ -15,7 +15,8 @@ class make_to_object():
             properties = {
             "Status": content.Schema(
                 type = content.Type.STRING,
-                enum = ["hold", "sell", "buy"]
+                description="If you decide to wait and see, use the hold or sell if you are short if long, buy If you want to close the position, write stop.",
+                enum = ["hold", "sell", "buy","stop"]
             ),
             "tp": content.Schema(
                 type = content.Type.NUMBER,
@@ -27,9 +28,11 @@ class make_to_object():
                 type = content.Type.NUMBER,
             ),
             "buy_now": content.Schema(
+                description="Returns true if the position should be opened immediately, like buy at market price.",
                 type = content.Type.BOOLEAN,
             ),
             "stop_order": content.Schema(
+                description="Returns true if the position should be closed.",
                 type = content.Type.BOOLEAN,
             ),
             },
