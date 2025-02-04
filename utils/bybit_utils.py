@@ -123,17 +123,31 @@ class BybitUtils:
     
     # TODO: OrderID 저장?
     
-    def close_position(self, symbol, order_id):
+    def close_position(self, status):
         try:
+            # 오직 포지션 종료만 가능함
+            params = {'reduce_only': True}
             # 포지션 청산
-            order = self.exchange.close_position(order_id, symbol)
-            return order
+            if status == 'sell':
+                # 롱 포지션 청산: 시장가 매도
+                self.exchange.create_market_buy_order(
+                    symbol="XRP/USDT:USDT",
+                    amount=1000,
+                    params=params
+                )
+            elif status == 'buy':
+                # 숏 포지션 청산: 시장가 매도
+                self.exchange.create_market_sell_order(
+                    symbol="XRP/USDT:USDT",
+                    amount=1000,
+                    params=params
+                )
         
         except Exception as e:
             print(f"Error closing position: {e}")
             return None
         
-    def close_all_positions(self, symbol, order_id):
+    def close_all_positions(self):
         try:
             # 포지션 청산
             order = self.exchange.close_all_positions()
@@ -172,7 +186,7 @@ class BybitUtils:
         
 if __name__ == '__main__':
     bybit = BybitUtils(is_testnet=True)  # 테스트넷 사용
-    value = bybit.get_positions()
+    value = bybit.close_position('buy')
     
     print(value)
     
