@@ -4,3 +4,30 @@
 2025-02-04 15:23:06,391 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=2.5777 type='market' tp=2.45 sl=2.7
 2025-02-04 15:23:16,709 - INFO - Scheduler started at 2025-02-04 15:23:16.709887+09:00
 2025-02-04 15:23:18,712 - INFO - Active position exists, skipping trading cycle
+2025-02-04 17:59:45,521 - INFO - Scheduler started at 2025-02-04 17:59:45.521721+09:00
+2025-02-04 18:04:38,950 - INFO - Scheduler started at 2025-02-04 18:04:38.950509+09:00
+2025-02-04 18:05:10,977 - INFO - Position opened: symbol='XRP/USDT:USDT' side='buy' quantity=1.0 price=2.5281 type='market' tp=2.68 sl=2.48
+2025-02-04 18:06:16,069 - INFO - Scheduler started at 2025-02-04 18:06:16.069399+09:00
+2025-02-04 18:06:48,728 - ERROR - Error in automation: 'buy_now'
+2025-02-04 18:11:34,411 - INFO - Scheduler started at 2025-02-04 18:11:34.411747+09:00
+2025-02-04 18:12:08,266 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=1.0 price=2.53 type='limit' tp=2.45 sl=2.575
+2025-02-04 18:13:09,456 - INFO - Scheduler started at 2025-02-04 18:13:09.456820+09:00
+2025-02-04 18:13:11,138 - INFO - Active position exists, cancle current orders
+2025-02-04 18:13:40,991 - INFO - No trading signal generated
+2025-02-04 19:05:24,945 - INFO - Scheduler started at 2025-02-04 19:05:24.945793+09:00
+2025-02-04 19:05:56,988 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=100.0 price=2.5398 type='market' tp=2.4 sl=2.67
+2025-02-04 19:11:13,816 - INFO - Scheduler started at 2025-02-04 19:11:13.815985+09:00
+2025-02-04 19:11:15,280 - INFO - Active position exists, skipping trading cycle
+2025-02-04 19:12:46,326 - INFO - Scheduler started at 2025-02-04 19:12:46.326617+09:00
+2025-02-04 19:12:48,086 - INFO - Active position exists, skipping trading cycle
+2025-02-04 19:22:19,677 - INFO - Scheduler started at 2025-02-04 19:22:19.677072+09:00
+2025-02-04 19:22:22,327 - INFO - Active position exists, skipping trading cycle
+2025-02-04 19:30:02,010 - INFO - Active position exists, skipping trading cycle
+2025-02-04 19:34:28,754 - INFO - Scheduler started at 2025-02-04 19:34:28.754844+09:00
+2025-02-04 19:35:00,128 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=100.0 price=2.555 type='limit' tp=2.4 sl=2.68
+2025-02-04 19:37:26,158 - INFO - Scheduler started at 2025-02-04 19:37:26.158210+09:00
+2025-02-04 19:37:53,658 - INFO - Position opened: symbol='XRP/USDT:USDT' side='sell' quantity=100.0 price=2.5574 type='market' tp=2.4 sl=2.68
+2025-02-04 19:38:22,754 - INFO - Scheduler started at 2025-02-04 19:38:22.754653+09:00
+2025-02-04 19:38:59,145 - INFO - No trading signal generated
+2025-02-04 19:39:13,183 - INFO - Scheduler started at 2025-02-04 19:39:13.183280+09:00
+2025-02-04 19:39:41,082 - INFO - No trading signal generated
