@@ -39,7 +39,7 @@ class make_to_object():
         self.model = genai.GenerativeModel(
           model_name="gemini-2.0-flash-exp",
           generation_config=generation_config,
-          system_instruction="입력된 값을 object로 변환하시오.\n시장가의 경우 market buy를 true로 합니다.",
+          system_instruction="In the <result> tag, write how you want to go long, short, wait and see, or close. If there is no applicable value, please write 0.1.",
         )
         self.chat_session = self.model.start_chat(
           history=[
