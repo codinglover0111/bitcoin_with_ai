@@ -57,7 +57,7 @@ def automation():
             return file
 
         generation_config = {
-            "temperature": 0.2,
+            "temperature": 0.7,
             "top_p": 0.95,
             "top_k": 64,
             "max_output_tokens": 65536,
@@ -167,7 +167,7 @@ def automation():
         elif value['Status'] == "hold":
             logging.info("No trading signal generated")
             
-        elif value['Status'] == "stop":
+        elif value['stop_order'] == True:
             logging.info("stop position(close_all)")
             bybit.close_all_positions()
 
@@ -180,7 +180,8 @@ def run_scheduler():
     current_time = datetime.now(seoul_tz)
     logging.info(f"Scheduler started at {current_time}")
 
-    # 매 30분 마다 실행
+    # 매 시간 00분 또는 30분에 실행
+    schedule.every().hour.at(":00").do(automation)
     schedule.every().hour.at(":30").do(automation)
     
     # 매 15분마다 실행
