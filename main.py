@@ -1,13 +1,20 @@
+import asyncio
 import math
 import os
+import sys
+import threading
+import discord
 import google.generativeai as genai
-from utils import bybit_utils, BybitUtils, Open_Position, make_to_object
+from utils import bybit_utils, BybitUtils, Open_Position, make_to_object, DiscordBot
 from dotenv import load_dotenv
 import schedule
 import time
 from datetime import datetime
 import pytz
 import logging
+
+load_dotenv()
+token = os.getenv('DISCORD_TOKEN')
 
 # TODO: 추후 AI 관련 부분을 클래스로 묶어 리팩토링해야함
 
@@ -20,8 +27,6 @@ logging.basicConfig(
         logging.StreamHandler()
     ]
 )
-
-load_dotenv()
 
 def upload_to_gemini(path, mime_type=None):
     """Uploads the given file to Gemini.
@@ -156,6 +161,22 @@ def automation():
     if value['stop_order'] == True:
         bybit.close_position()
         logging.info(f"close Posision")
+        for attempt in range(3):
+            try:
+                translate = genai.GenerativeModel(
+                    model_name="gemini-2.0-flash-exp",
+                    generation_config=generation_config,
+                    system_instruction="translate to korean",
+                )
+                translate_chat = translate.start_chat(
+                history=[])
+                translate_response = translate_chat.send_message(response.text)
+                bot_instance.send_message(translate_response)
+            except Exception as e:
+                logging.error(f"Error sending message to chat session: {str(e)}")
+                if attempt < 2:
+                    logging.info("Retrying...")
+                time.sleep(3)
         return
     # 트레이딩 실행
     if value['Status'] in ["buy", "sell"]:
@@ -177,9 +198,44 @@ def automation():
         )
         bybit.open_position(position_params)
         logging.info(f"Position opened: {position_params}")
+        for attempt in range(3):
+            try:
+                translate = genai.GenerativeModel(
+                    model_name="gemini-2.0-flash-exp",
+                    generation_config=generation_config,
+                    system_instruction="translate to korean",
+                )
+                translate_chat = translate.start_chat(
+                history=[])
+                translate_response = translate_chat.send_message(response.text)
+                bot_instance.send_message(translate_response.text)
+            except Exception as e:
+                logging.error(f"Error sending message to translate: {str(e)}")
+                bot_instance.send_message("Error sending message to translate")
+                if attempt < 2:
+                    logging.info("Retrying...")
+                time.sleep(3)
+        return
     elif value['Status'] == "hold":
         logging.info("No trading signal generated")
-
+        for attempt in range(3):
+            try:
+                translate = genai.GenerativeModel(
+                    model_name="gemini-2.0-flash-exp",
+                    generation_config=generation_config,
+                    system_instruction="translate to korean",
+                )
+                translate_chat = translate.start_chat(
+                history=[])
+                translate_response = translate_chat.send_message(response.text)
+                bot_instance.send_message(translate_response.text)
+            except Exception as e:
+                logging.error(f"Error sending message to translate: {str(e)}")
+                bot_instance.send_message("Error sending message to translate")
+                if attempt < 2:
+                    logging.info("Retrying...")
+                time.sleep(3)
+        return
 def run_scheduler():
     # 서울 시간대 설정
     seoul_tz = pytz.timezone('Asia/Seoul')
@@ -203,5 +259,33 @@ def run_scheduler():
             logging.error(f"Scheduler error: {str(e)}")
             time.sleep(60)  # 오류 발생시 1분 대기
 
+def discord_bot_start(loop, bot_instance, token):
+    """봇을 실행하는 코루틴을 이벤트 루프에서 실행"""
+    if not token:
+        print("Error: Discord token is empty or not found")
+        return
+    
+    print("Attempting to start bot with token length:", len(token))
+    asyncio.set_event_loop(loop)
+    try:
+        loop.run_until_complete(bot_instance.bot.start(token))
+    except discord.errors.LoginFailure as e:
+        print(f"Login Failed: {e}")
+        print("Please check your .env file and ensure DISCORD_TOKEN is set correctly")
+
 if __name__ == '__main__':
+    load_dotenv()
+    
+    token = os.getenv('DISCORD_TOKEN')
+    if not token:
+        print("Discord token not found in .env file")
+        sys.exit(1)
+    
+    loop = asyncio.new_event_loop()
+    bot_instance = DiscordBot(loop)
+    
+    # f-string 제거, token 직접 전달
+    bot_thread = threading.Thread(target=discord_bot_start, args=(loop, bot_instance, token), daemon=True)
+    bot_thread.start()
+
     run_scheduler()
