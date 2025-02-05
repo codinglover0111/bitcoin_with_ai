@@ -41,7 +41,11 @@ def round_price(price):
     """XRP/USDT 가격을 최소 정밀도(0.0001)에 맞게 반올림"""
     return round(float(price), 4)
 
+chat_history = None
+
 def automation():
+    
+    logging.info("starting...")
     bybit = BybitUtils(is_testnet=False)
     
     # 현재 포지션 체크
@@ -67,6 +71,15 @@ def automation():
         "top_k": 64,
         "max_output_tokens": 65536,
         "response_mime_type": "text/plain",
+    }
+    
+    translate_config = {
+        "temperature": 0.7,
+        "top_p": 0.95,
+        "top_k": 64,
+        "max_output_tokens": 65536,
+        "response_mime_type": "text/plain",
+        
     }
 
     model = genai.GenerativeModel(
@@ -95,24 +108,24 @@ def automation():
     chat_session = model.start_chat(
         history=[
             {
-                "role": "model",
+                "role": "user",
                 "parts": [
                     files[0],
-                    "15분 봉"
+                    "15분 차트"
                 ],
             },
             {
-                "role": "model",
+                "role": "user",
                 "parts": [
                     files[1],
-                    "1시간 봉"
+                    "1시간 차트"
                 ],
             },
             {
                 "role": "user",
                 "parts": [
                     files[2],
-                    f"4시간 봉",
+                    f"4시간 차트",
                 ],
             }
         ]
@@ -136,7 +149,8 @@ def automation():
                     "role": "user",
                     "parts": [
                         f"""현재 포지션: 없음
-                        Current Price: {current_price}""",
+                        Current Price: {current_price}
+                        """,
                     ],
                 })
             break
@@ -157,21 +171,22 @@ def automation():
     current_available_asset = bybit.get_current_available(leverage=20)
     
     qty = math.ceil(current_available_asset*25/100)
-    
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M")
+    translate = genai.GenerativeModel(
+                    model_name="gemini-2.0-flash-exp",
+                    generation_config=translate_config,
+                    system_instruction=f"현재 날짜,시간({current_time})을 기재한 다음 마크다운 양식을 이용하여 한국어로 요약해주세요.",
+                )
     if value['stop_order'] == True:
         bybit.close_position()
         logging.info(f"close Posision")
         for attempt in range(3):
             try:
-                translate = genai.GenerativeModel(
-                    model_name="gemini-2.0-flash-exp",
-                    generation_config=generation_config,
-                    system_instruction="translate to korean",
-                )
                 translate_chat = translate.start_chat(
                 history=[])
                 translate_response = translate_chat.send_message(response.text)
-                bot_instance.send_message(translate_response)
+                bot_instance.send_message(translate_response.text)
+                return
             except Exception as e:
                 logging.error(f"Error sending message to chat session: {str(e)}")
                 if attempt < 2:
@@ -200,15 +215,12 @@ def automation():
         logging.info(f"Position opened: {position_params}")
         for attempt in range(3):
             try:
-                translate = genai.GenerativeModel(
-                    model_name="gemini-2.0-flash-exp",
-                    generation_config=generation_config,
-                    system_instruction="translate to korean",
-                )
                 translate_chat = translate.start_chat(
                 history=[])
                 translate_response = translate_chat.send_message(response.text)
                 bot_instance.send_message(translate_response.text)
+                # chat_history = translate_response.text
+                return
             except Exception as e:
                 logging.error(f"Error sending message to translate: {str(e)}")
                 bot_instance.send_message("Error sending message to translate")
@@ -220,30 +232,27 @@ def automation():
         logging.info("No trading signal generated")
         for attempt in range(3):
             try:
-                translate = genai.GenerativeModel(
-                    model_name="gemini-2.0-flash-exp",
-                    generation_config=generation_config,
-                    system_instruction="translate to korean",
-                )
                 translate_chat = translate.start_chat(
                 history=[])
                 translate_response = translate_chat.send_message(response.text)
                 bot_instance.send_message(translate_response.text)
+                return
             except Exception as e:
                 logging.error(f"Error sending message to translate: {str(e)}")
                 bot_instance.send_message("Error sending message to translate")
                 if attempt < 2:
                     logging.info("Retrying...")
                 time.sleep(3)
-        return
+        
 def run_scheduler():
     # 서울 시간대 설정
     seoul_tz = pytz.timezone('Asia/Seoul')
     current_time = datetime.now(seoul_tz)
     logging.info(f"Scheduler started at {current_time}")
 
-    # 매 시간 5분 마다 실행
-    schedule.every(5).minutes.do(automation)
+
+    for minute in range(0, 60, 15):
+        schedule.every().hour.at(f":{minute:02d}").do(automation)
     
     # 매 15분마다 실행
     # schedule.every(15).minutes.do(automation)

@@ -15,7 +15,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # 환경 설정
-ENV TZ=Asia/Seoul
+ENV TZ Asia/Seoul
 ENV PYTHONUNBUFFERED=1
 
 # 볼륨 설정

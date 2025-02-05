@@ -21,7 +21,7 @@ class DiscordBot:
         for guild in self.bot.guilds:
             for channel in guild.text_channels:
                 if channel.permissions_for(guild.me).send_messages:
-                    await channel.send('안녕하세요! 제가 입장했습니다.')
+                    # await channel.send('안녕하세요! 제가 입장했습니다.')
                     break
 
     async def _send_message_async(self, message: str):

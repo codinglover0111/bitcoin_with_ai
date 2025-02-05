@@ -15,7 +15,7 @@ class make_to_object():
             properties = {
             "Status": content.Schema(
                 type = content.Type.STRING,
-                description="If you decide to Watch and wait, use the hold. sell if you are short if long. buy If you want to close the position, write stop.",
+                description="관망(Watch and Wait)의 경우 hold,포지션 청산의 경우 stop,매수는 buy(long),매도는 sell(short)입니다.",
                 enum = ["hold", "sell", "buy","stop"]
             ),
             "tp": content.Schema(
@@ -28,11 +28,11 @@ class make_to_object():
                 type = content.Type.NUMBER,
             ),
             "buy_now": content.Schema(
-                description="Returns true if the position should be opened immediately, like buy at market price.",
+                description="시장가로 즉시 구매 해야하는 경우 True를 반환합니다.",
                 type = content.Type.BOOLEAN,
             ),
             "stop_order": content.Schema(
-                description="Returns true if the position should be closed.",
+                description="포지션 청산의 경우 True를 반환합니다.",
                 type = content.Type.BOOLEAN,
             ),
             },
@@ -42,7 +42,7 @@ class make_to_object():
         self.model = genai.GenerativeModel(
           model_name="gemini-2.0-flash-exp",
           generation_config=generation_config,
-          system_instruction="In the <result> tag, write how you want to go long, short, watch and wait, or close. If there is no applicable value, please write 0.1.",
+          system_instruction="입력된 내용을 천천히 읽어본 다음 롱(Long), 숏(Short), 관망(Watch and Wait), 청산(Stop)인지 꼼꼼히 살펴본 다음에 object로 변환하세요.",
         )
         self.chat_session = self.model.start_chat(
           history=[
