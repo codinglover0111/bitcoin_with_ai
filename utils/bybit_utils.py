@@ -84,11 +84,13 @@ class BybitUtils:
                     order = self.exchange.create_market_sell_order(position.symbol, position.quantity,params={
                         'takeProfit': position.tp,  # TP 가격
                         'stopLoss': position.sl,  # SL 가격
+                        'positionIdx': 2,
                     })
                 else:
                     order = self.exchange.create_market_buy_order(position.symbol, position.quantity,params={
                         'takeProfit': position.tp,  # TP 가격
                         'stopLoss': position.sl,  # SL 가격
+                        'positionIdx': 1,
                     })
             elif position.type=="limit":
                 # 지정가 주문
@@ -128,19 +130,18 @@ class BybitUtils:
             # ! 추후 기능 추가를 고려안한 하드코딩임 수정 필요
             position = self.get_position()
             # 오직 포지션 종료만 가능함
-            params = {'reduce_only': True}
             # 포지션 청산
             if position['side'] == 'Buy':
                 self.exchange.create_market_sell_order(
                     symbol="XRP/USDT:USDT",
                     amount=1000,
-                    params=params
+                    params={'reduce_only': True,'positionIdx': 1}
                 )
             else:
                 self.exchange.create_market_buy_order(
                     symbol="XRP/USDT:USDT",
                     amount=1000,
-                    params=params
+                    params={'reduce_only': True,'positionIdx': 2}
                 )
         except Exception as e:
             print(f"Error closing position: {e}")
@@ -150,6 +151,27 @@ class BybitUtils:
             print(f"Error closing position: {e}")
             return None
         
+        
+    def get_assets(self):
+        try:
+            balance = self.exchange.fetch_balance()
+            usdt_balance = balance['USDT']['free']
+            return usdt_balance
+        except Exception as e:
+            print(f"Error fetching balance: {e}")
+            return None
+    
+    def get_current_available(self,leverage=1,symbol = 'XRP/USDT:USDT'):
+        try:
+            balance = self.exchange.fetch_balance()
+            usdt_balance = balance['USDT']['free']
+            ticker = self.exchange.fetch_ticker(symbol)
+            current_price = ticker['last']
+            max_amount = (usdt_balance * leverage) / current_price
+            return max_amount
+        except Exception as e:
+            print(f"Error fetching balance: {e}")
+            return None
         
     def get_orders(self):
         """주문들 받기"""
@@ -178,22 +200,23 @@ class BybitUtils:
         
         
 if __name__ == '__main__':
-    bybit = BybitUtils(is_testnet=True)  # 테스트넷 사용
-    value = bybit.close_position()
-    
-    print(value)
-    
+    bybit = BybitUtils(is_testnet=False)  # 테스트넷 사용
+    # value = bybit.close_position()
+    # value = bybit.get_assets()
+    # print(value)
+    # value = bybit.get_current_available(leverage=20)
+    # print(value)
     # order = bybit.open_position(
     #     Open_Position(
     #         symbol="XRP/USDT:USDT",
     #         side="buy",
     #         price=2.8,
-    #         quantity=1000,
+    #         quantity=1,
     #         tp=3.3,
-    #         sl=2.7,
+    #         sl=2.0,
     #         type="market"
     #     )
     # )
-    # print(order)
+    bybit.close_position()
     
     

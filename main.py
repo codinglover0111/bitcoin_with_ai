@@ -1,3 +1,4 @@
+import math
 import os
 import google.generativeai as genai
 from utils import bybit_utils, BybitUtils, Open_Position, make_to_object
@@ -36,7 +37,7 @@ def round_price(price):
     return round(float(price), 4)
 
 def automation():
-    bybit = BybitUtils(True)
+    bybit = BybitUtils(is_testnet=False)
     
     # 현재 포지션 체크
     current_position = bybit.get_positions()
@@ -56,7 +57,7 @@ def automation():
     genai.configure(api_key=os.environ["GEMINI_API_KEY"])
 
     generation_config = {
-        "temperature": 0.7,
+        "temperature": 0.3,
         "top_p": 0.95,
         "top_k": 64,
         "max_output_tokens": 65536,
@@ -133,23 +134,28 @@ def automation():
                         Current Price: {current_price}""",
                     ],
                 })
-            response = response.text
             break
         except Exception as e:
             logging.error(f"Error sending message to chat session: {str(e)}")
             if attempt < 2:
                 logging.info("Retrying...")
             time.sleep(3)
-    logging.info(response)
-    print(response)
+    logging.info(response.text)
+    print(response.text)
 
     object = make_to_object()
-    value = object.make_it_object(response)
+    value = object.make_it_object(response.text)
     logging.info(value)
     print(value)
     
+    # 비중 설정
+    current_available_asset = bybit.get_current_available(leverage=20)
+    
+    qty = math.ceil(current_available_asset*25/100)
+    
     if value['stop_order'] == True:
         bybit.close_position()
+        logging.info(f"close Posision")
         return
     # 트레이딩 실행
     if value['Status'] in ["buy", "sell"]:
@@ -167,14 +173,12 @@ def automation():
             side=side,
             tp=value['tp'],
             sl=value['sl'],
-            quantity=100
+            quantity=qty
         )
         bybit.open_position(position_params)
         logging.info(f"Position opened: {position_params}")
-        return
     elif value['Status'] == "hold":
         logging.info("No trading signal generated")
-        return
 
 def run_scheduler():
     # 서울 시간대 설정
@@ -182,11 +186,8 @@ def run_scheduler():
     current_time = datetime.now(seoul_tz)
     logging.info(f"Scheduler started at {current_time}")
 
-    # 매 시간 15분 마다 실행행
-    schedule.every().hour.at(":15").do(automation)
-    schedule.every().hour.at(":30").do(automation)
-    schedule.every().hour.at(":45").do(automation)
-    schedule.every().hour.at(":00").do(automation)
+    # 매 시간 5분 마다 실행
+    schedule.every(5).minutes.do(automation)
     
     # 매 15분마다 실행
     # schedule.every(15).minutes.do(automation)
